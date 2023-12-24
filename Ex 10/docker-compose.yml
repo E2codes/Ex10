@@ -1,0 +1,21 @@
+version: '3' #Docker version 
+
+services:
+  web:
+    image: python:3.8-slim  #This will be our base image for flask
+    command: bash -c "pip install flask psycopg2-binary && python /code/app.py"
+    volumes:
+      - ./app:/code
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest #Gets us the offical and most recent image 
+    environment:
+      POSTGRES_DB: frog_db
+      POSTGRES_USER: frog_admin
+      POSTGRES_PASSWORD: hoppy_boi
+    ports:
+      - "5432:5432"  #Default port of postgre
